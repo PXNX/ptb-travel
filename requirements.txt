@@ -1,0 +1,5 @@
+bs4==0.0.1
+python-telegram-bot[job-queue]==21.9
+python-dotenv==1.0.1
+requests==2.32.3
+regex==2024.11.6
