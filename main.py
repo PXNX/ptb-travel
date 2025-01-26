@@ -5,9 +5,9 @@ from os import makedirs, path
 from sys import platform, version_info
 from typing import Final
 
-from telegram import LinkPreviewOptions
+from telegram import LinkPreviewOptions, Update
 from telegram.constants import ParseMode
-from telegram.ext import Defaults, ApplicationBuilder, PicklePersistence
+from telegram.ext import Defaults, ApplicationBuilder, PicklePersistence, CallbackContext, CommandHandler
 
 from config import TOKEN
 from maps import register_maps
@@ -26,6 +26,10 @@ def add_logging():
     logging.getLogger("httpx").setLevel(logging.WARNING)
 
 
+async def start(update: Update, _: CallbackContext):
+    await update.message.reply_text("Hey!\n\nBitte trete https://t.me/reisetipps69 bei.")
+
+
 if __name__ == "__main__":
 
     add_logging()
@@ -38,6 +42,8 @@ if __name__ == "__main__":
            .persistence(PicklePersistence(filepath="persistence"))
            .read_timeout(50).get_updates_read_timeout(50)
            .build())
+
+    app.add_handler(CommandHandler("start", start))
 
     register_maps(app)
 

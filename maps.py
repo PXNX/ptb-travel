@@ -16,10 +16,21 @@ async def scrap_map(update: Update, context: CallbackContext):
     for url in urls:
 
         try:
-            response = requests.get(url.string, allow_redirects=True)
+            googleTrendsUrl = 'https://google.com'
+            response = requests.get(googleTrendsUrl)
+            if response.status_code == 200:
+                g_cookies = response.cookies.get_dict()
+            else:
+                g_cookies= {}
+
+            headers = {
+                'User-agent':
+                    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.102 Safari/537.36 Edge/18.19582'
+            }
+            response = requests.get(url.string, allow_redirects=True, headers=headers)
             final_url = response.url
 
-            response = requests.get(url.string)
+            response = requests.get(url.string,headers=headers,cookies=g_cookies)
             if response.status_code != 200: # seems to run into 429
                 logging.error(f"Failed to fetch page '{final_url}'. Status code: {response.status_code}")
                 return
