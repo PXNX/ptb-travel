@@ -1,0 +1,11 @@
+# Katana Field Configuration
+- name: title
+  type: regex
+  part: body
+  regex:
+    - '<meta property="og:title" content="([^"]+)"'
+- name: image
+  type: regex
+  part: body
+  regex:
+    - '<meta property="og:image" content="([^"]+)"'
